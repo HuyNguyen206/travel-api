@@ -12,4 +12,6 @@ class BaseModel extends Model
 
     protected $guarded = [];
 
+    protected $perPage = 10;
+
 }

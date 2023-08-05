@@ -23,4 +23,13 @@ class TravelFactory extends Factory
             'number_of_days' => rand(1, 20)
         ];
     }
+
+    public function public(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_public' => true,
+            ];
+        });
+    }
 }
