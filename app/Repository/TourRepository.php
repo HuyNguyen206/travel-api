@@ -18,22 +18,24 @@ class TourRepository extends BaseRepository
 
     public function getToursByTravel(Travel $travel, Request $request)
     {
-       return $travel->tours()
-            ->when($request->start_date && $request->end_date, function (Builder $builder) use($request){
+        return $travel->tours()
+            ->when($request->start_date && $request->end_date, function (Builder $builder) use ($request) {
                 $builder->whereDate('start_date', '>=', $request->start_date)
-                        ->whereDate('end_date', '<=', $request->end_date);
+                    ->whereDate('end_date', '<=', $request->end_date);
             })
-            ->when( $request->price_from && $request->price_to, function (Builder $builder) use($request){
-                $builder->where('price', '>=', $request->price_from)
-                        ->where('price', '<=', $request->price_to);
+            ->when($request->price_from, function (Builder $builder, $priceFrom) {
+                $builder->where('price', '>=', $priceFrom * 100);
             })
-           ->when($request->sort, function (Builder $builder, $sort) {
-               $column = key($sort);
-               $direction = current($sort);
-               $builder->orderBy($column, $direction);
-           })
-           ->orderBy('start_date')
-           ->paginate();
+            ->when($request->price_to, function (Builder $builder, $priceTo) {
+                $builder->where('price', '<=', $priceTo * 100);
+            })
+            ->when($request->sort, function (Builder $builder, $sort) {
+                $column = key($sort);
+                $direction = current($sort);
+                $builder->orderBy($column, $direction);
+            })
+            ->orderBy('start_date')
+            ->paginate();
     }
 
 }

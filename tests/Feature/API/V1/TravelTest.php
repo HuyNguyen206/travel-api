@@ -82,8 +82,8 @@ class TravelTest extends TestCase
                 $travel->slug,
                 'start_date' => '2023-08-08',
                 'end_date' => '2023-08-10',
-                'price_from' => 10*100,
-                'price_to' => 50*100,
+                'price_from' => 10,
+                'price_to' => 50,
             ]
         ))
             ->assertJsonCount(6, 'data')
@@ -127,8 +127,8 @@ class TravelTest extends TestCase
                 $travel->slug,
                 'start_date' => '2023-08-08',
                 'end_date' => '2023-08-10',
-                'price_from' => 5*100,
-                'price_to' => 50*100,
+                'price_from' => 5,
+                'price_to' => 50,
                 'sort[price]' => 'asc'
             ]
         ))
